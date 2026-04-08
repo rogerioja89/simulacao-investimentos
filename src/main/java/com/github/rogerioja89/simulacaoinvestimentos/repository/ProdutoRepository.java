@@ -11,4 +11,8 @@ public class ProdutoRepository implements PanacheRepository<Produto> {
     public Produto findByTipo(String tipoProduto) {
         return find("tipoProduto", tipoProduto).firstResult();
     }
+
+    public Produto findByTipoIgnoreCase(String tipoProduto) {
+        return find("lower(tipoProduto) = ?1", tipoProduto.toLowerCase()).firstResult();
+    }
 }

@@ -3,7 +3,7 @@ package com.github.rogerioja89.simulacaoinvestimentos.entity;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "simulacoes")
@@ -35,7 +35,7 @@ public class Simulacao extends PanacheEntityBase {
     public Double valorFinal;
 
     @Column(nullable = false)
-    public LocalDateTime dataSimulacao;
+    public Instant dataSimulacao;
 
     // Construtor vazio exigido pelo JPA
     public Simulacao() {}
@@ -44,7 +44,7 @@ public class Simulacao extends PanacheEntityBase {
     public Simulacao(Long clienteId, String produtoNome, String tipoProduto,
                      Double valorInvestido, Integer prazoMeses,
                      Double rentabilidadeAplicada, Double valorFinal,
-                     LocalDateTime dataSimulacao) {
+                     Instant dataSimulacao) {
         this.clienteId = clienteId;
         this.produtoNome = produtoNome;
         this.tipoProduto = tipoProduto;
