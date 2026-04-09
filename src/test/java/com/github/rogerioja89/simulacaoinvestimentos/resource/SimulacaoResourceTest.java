@@ -14,14 +14,14 @@ public class SimulacaoResourceTest {
     void testCriarSimulacaoEndpoint() {
         given()
                 .contentType(ContentType.JSON)
-                .body("{\"clienteId\":1,\"valor\":2000,\"prazoMeses\":12,\"tipoProduto\":\"CDB\"}")
+                .body("{\"clienteId\":1,\"valor\":10000.00,\"prazoMeses\":12,\"tipoProduto\":\"CDB\"}")
                 .when()
                 .post("/simulacoes")
                 .then()
                 .statusCode(200)
                 .body("produtoValidado.tipo", equalTo("CDB"))
                 .body("produtoValidado.nome", equalTo("CDB Caixa 2026"))
-                .body("resultadoSimulacao.valorFinal", equalTo(2253.65f))
+                .body("resultadoSimulacao.valorFinal", equalTo(11268.25f))
                 .body("resultadoSimulacao.prazoMeses", equalTo(12))
                 .body("dataSimulacao", notNullValue());
     }
