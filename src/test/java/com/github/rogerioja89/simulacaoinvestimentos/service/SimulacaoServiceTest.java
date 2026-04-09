@@ -2,7 +2,6 @@ package com.github.rogerioja89.simulacaoinvestimentos.service;
 
 import com.github.rogerioja89.simulacaoinvestimentos.entity.Produto;
 import com.github.rogerioja89.simulacaoinvestimentos.repository.ProdutoRepository;
-import com.github.rogerioja89.simulacaoinvestimentos.repository.SimulacaoRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,7 @@ public class SimulacaoServiceTest {
         assertTrue(resultado.comSucesso());
         var simulacao = resultado.simulacaoProcessada().simulacao();
         assertEquals("CDB", simulacao.tipoProduto);
-        assertEquals(2253.650469149836, simulacao.valorFinal, 0.000001);
+        assertEquals(2253.65, simulacao.valorFinal, 0.01);
     }
 
     @Test

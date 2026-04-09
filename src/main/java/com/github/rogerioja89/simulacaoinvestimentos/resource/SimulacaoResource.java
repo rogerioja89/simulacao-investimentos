@@ -1,5 +1,7 @@
 package com.github.rogerioja89.simulacaoinvestimentos.resource;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.rogerioja89.simulacaoinvestimentos.entity.Simulacao;
 import com.github.rogerioja89.simulacaoinvestimentos.service.SimulacaoService;
 import com.github.rogerioja89.simulacaoinvestimentos.repository.SimulacaoRepository;
@@ -24,17 +26,33 @@ public class SimulacaoResource {
     @Inject
     SimulacaoRepository simulacaoRepository;
 
+    @Inject
+    ObjectMapper objectMapper;
+
     /**
      * Endpoint para criar uma simulação
      */
     @POST
-    public Response criarSimulacao(SimulacaoRequest request) {
-        if (request == null) {
+    public Response criarSimulacao(String payload) {
+        if (payload == null || payload.isBlank()) {
             return Response.status(422)
                     .entity(new ErroResponse(
                             "PAYLOAD_AUSENTE",
                             "Payload ausente para criação da simulação.",
                             "Envie um JSON no corpo com clienteId, valor, prazoMeses e tipoProduto."
+                    ))
+                    .build();
+        }
+
+        SimulacaoRequest request;
+        try {
+            request = objectMapper.readValue(payload, SimulacaoRequest.class);
+        } catch (JsonProcessingException e) {
+            return Response.status(422)
+                    .entity(new ErroResponse(
+                            "PAYLOAD_INVALIDO",
+                            "Payload inválido para criação da simulação.",
+                            "Verifique se o JSON está válido e se os tipos dos campos estão corretos."
                     ))
                     .build();
         }
