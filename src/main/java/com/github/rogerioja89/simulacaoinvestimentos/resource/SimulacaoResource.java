@@ -77,17 +77,17 @@ public class SimulacaoResource {
 
         SimulacaoResponse response = new SimulacaoResponse(
                 new ProdutoValidadoResponse(
-                        produto.id,
-                        produto.nome,
-                        produto.tipoProduto,
-                        produto.rentabilidadeAnual,
-                        produto.risco
+                        produto.getId(),
+                        produto.getNome(),
+                        produto.getTipoProduto(),
+                        produto.getRentabilidadeAnual(),
+                        produto.getRisco()
                 ),
                 new ResultadoSimulacaoResponse(
-                        BigDecimal.valueOf(simulacao.valorFinal).setScale(2, RoundingMode.HALF_UP),
-                        simulacao.prazoMeses
+                        BigDecimal.valueOf(simulacao.getValorFinal()).setScale(2, RoundingMode.HALF_UP),
+                        simulacao.getPrazoMeses()
                 ),
-                simulacao.dataSimulacao
+                simulacao.getDataSimulacao()
         );
 
         return Response.ok(response).build();
@@ -107,15 +107,15 @@ public class SimulacaoResource {
         List<Simulacao> simulacoes = simulacaoRepository.findByClienteId(clienteId);
         List<SimulacaoHistoricoResponse> response = simulacoes.stream()
                 .map(simulacao -> new SimulacaoHistoricoResponse(
-                        simulacao.id,
-                        simulacao.clienteId,
-                        simulacao.produtoNome,
-                        simulacao.tipoProduto,
-                        BigDecimal.valueOf(simulacao.valorInvestido).setScale(2, RoundingMode.HALF_UP),
-                        simulacao.prazoMeses,
-                        simulacao.rentabilidadeAplicada,
-                        BigDecimal.valueOf(simulacao.valorFinal).setScale(2, RoundingMode.HALF_UP),
-                        simulacao.dataSimulacao
+                        simulacao.getId(),
+                        simulacao.getClienteId(),
+                        simulacao.getProdutoNome(),
+                        simulacao.getTipoProduto(),
+                        BigDecimal.valueOf(simulacao.getValorInvestido()).setScale(2, RoundingMode.HALF_UP),
+                        simulacao.getPrazoMeses(),
+                        simulacao.getRentabilidadeAplicada(),
+                        BigDecimal.valueOf(simulacao.getValorFinal()).setScale(2, RoundingMode.HALF_UP),
+                        simulacao.getDataSimulacao()
                 ))
                 .toList();
 

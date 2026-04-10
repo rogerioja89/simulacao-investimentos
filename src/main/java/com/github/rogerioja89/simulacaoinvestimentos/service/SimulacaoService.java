@@ -60,29 +60,29 @@ public class SimulacaoService {
         }
 
         // Valida se o produto é elegível
-        boolean elegivel = valor >= produto.valorMin && valor <= produto.valorMax
-                && prazoMeses >= produto.prazoMinMeses && prazoMeses <= produto.prazoMaxMeses;
+        boolean elegivel = valor >= produto.getValorMin() && valor <= produto.getValorMax()
+                && prazoMeses >= produto.getPrazoMinMeses() && prazoMeses <= produto.getPrazoMaxMeses();
 
         if (!elegivel) {
             return ResultadoCriacaoSimulacao.falha(
                     "PRODUTO_NAO_ELEGIVEL",
                     "Os dados informados não atendem às regras do produto.",
-                    "Faixas aceitas: valor entre " + produto.valorMin + " e " + produto.valorMax
-                            + ", prazo entre " + produto.prazoMinMeses + " e " + produto.prazoMaxMeses + " meses."
+                    "Faixas aceitas: valor entre " + produto.getValorMin() + " e " + produto.getValorMax()
+                            + ", prazo entre " + produto.getPrazoMinMeses() + " e " + produto.getPrazoMaxMeses() + " meses."
             );
         }
 
         // Cálculo em juros compostos com capitalização mensal.
-        double valorFinal = valor * Math.pow(1 + produto.rentabilidadeAnual / 12.0, prazoMeses);
+        double valorFinal = valor * Math.pow(1 + produto.getRentabilidadeAnual() / 12.0, prazoMeses);
 
         // Cria a simulação
         Simulacao simulacao = new Simulacao(
                 clienteId,
-                produto.nome,
-                produto.tipoProduto,
+                produto.getNome(),
+                produto.getTipoProduto(),
                 valor,
                 prazoMeses,
-                produto.rentabilidadeAnual,
+                produto.getRentabilidadeAnual(),
                 valorFinal,
                 Instant.now().truncatedTo(ChronoUnit.SECONDS)
         );

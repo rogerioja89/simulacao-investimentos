@@ -27,8 +27,8 @@ public class SimulacaoServiceTest {
 
         assertTrue(resultado.comSucesso());
         var simulacao = resultado.simulacaoProcessada().simulacao();
-        assertEquals("CDB", simulacao.tipoProduto);
-        assertEquals(2253.65, simulacao.valorFinal, 0.01);
+        assertEquals("CDB", simulacao.getTipoProduto());
+        assertEquals(2253.65, simulacao.getValorFinal(), 0.01);
     }
 
     @Test

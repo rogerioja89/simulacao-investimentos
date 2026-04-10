@@ -11,31 +11,31 @@ public class Simulacao extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
-    public Long clienteId;
+    private Long clienteId;
 
     @Column(nullable = false)
-    public String produtoNome;
+    private String produtoNome;
 
     @Column(nullable = false)
-    public String tipoProduto;
+    private String tipoProduto;
 
     @Column(nullable = false)
-    public Double valorInvestido;
+    private Double valorInvestido;
 
     @Column(nullable = false)
-    public Integer prazoMeses;
+    private Integer prazoMeses;
 
     @Column(nullable = false)
-    public Double rentabilidadeAplicada;
+    private Double rentabilidadeAplicada;
 
     @Column(nullable = false)
-    public Double valorFinal;
+    private Double valorFinal;
 
     @Column(nullable = false)
-    public Instant dataSimulacao;
+    private Instant dataSimulacao;
 
     // Construtor vazio exigido pelo JPA
     public Simulacao() {}
@@ -52,6 +52,78 @@ public class Simulacao extends PanacheEntityBase {
         this.prazoMeses = prazoMeses;
         this.rentabilidadeAplicada = rentabilidadeAplicada;
         this.valorFinal = valorFinal;
+        this.dataSimulacao = dataSimulacao;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    public String getProdutoNome() {
+        return produtoNome;
+    }
+
+    public void setProdutoNome(String produtoNome) {
+        this.produtoNome = produtoNome;
+    }
+
+    public String getTipoProduto() {
+        return tipoProduto;
+    }
+
+    public void setTipoProduto(String tipoProduto) {
+        this.tipoProduto = tipoProduto;
+    }
+
+    public Double getValorInvestido() {
+        return valorInvestido;
+    }
+
+    public void setValorInvestido(Double valorInvestido) {
+        this.valorInvestido = valorInvestido;
+    }
+
+    public Integer getPrazoMeses() {
+        return prazoMeses;
+    }
+
+    public void setPrazoMeses(Integer prazoMeses) {
+        this.prazoMeses = prazoMeses;
+    }
+
+    public Double getRentabilidadeAplicada() {
+        return rentabilidadeAplicada;
+    }
+
+    public void setRentabilidadeAplicada(Double rentabilidadeAplicada) {
+        this.rentabilidadeAplicada = rentabilidadeAplicada;
+    }
+
+    public Double getValorFinal() {
+        return valorFinal;
+    }
+
+    public void setValorFinal(Double valorFinal) {
+        this.valorFinal = valorFinal;
+    }
+
+    public Instant getDataSimulacao() {
+        return dataSimulacao;
+    }
+
+    public void setDataSimulacao(Instant dataSimulacao) {
         this.dataSimulacao = dataSimulacao;
     }
 }

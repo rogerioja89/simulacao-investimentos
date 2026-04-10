@@ -9,31 +9,31 @@ public class Produto extends PanacheEntityBase {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
-    public String nome;
+    private String nome;
 
     @Column(nullable = false)
-    public String tipoProduto;
+    private String tipoProduto;
 
     @Column(nullable = false)
-    public Double rentabilidadeAnual;
+    private Double rentabilidadeAnual;
 
     @Column(nullable = false)
-    public String risco;
+    private String risco;
 
     @Column(nullable = false)
-    public Integer prazoMinMeses;
+    private Integer prazoMinMeses;
 
     @Column(nullable = false)
-    public Integer prazoMaxMeses;
+    private Integer prazoMaxMeses;
 
     @Column(nullable = false)
-    public Double valorMin;
+    private Double valorMin;
 
     @Column(nullable = false)
-    public Double valorMax;
+    private Double valorMax;
 
     // Construtor vazio exigido pelo JPA
     public Produto() {}
@@ -49,6 +49,78 @@ public class Produto extends PanacheEntityBase {
         this.prazoMinMeses = prazoMinMeses;
         this.prazoMaxMeses = prazoMaxMeses;
         this.valorMin = valorMin;
+        this.valorMax = valorMax;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getTipoProduto() {
+        return tipoProduto;
+    }
+
+    public void setTipoProduto(String tipoProduto) {
+        this.tipoProduto = tipoProduto;
+    }
+
+    public Double getRentabilidadeAnual() {
+        return rentabilidadeAnual;
+    }
+
+    public void setRentabilidadeAnual(Double rentabilidadeAnual) {
+        this.rentabilidadeAnual = rentabilidadeAnual;
+    }
+
+    public String getRisco() {
+        return risco;
+    }
+
+    public void setRisco(String risco) {
+        this.risco = risco;
+    }
+
+    public Integer getPrazoMinMeses() {
+        return prazoMinMeses;
+    }
+
+    public void setPrazoMinMeses(Integer prazoMinMeses) {
+        this.prazoMinMeses = prazoMinMeses;
+    }
+
+    public Integer getPrazoMaxMeses() {
+        return prazoMaxMeses;
+    }
+
+    public void setPrazoMaxMeses(Integer prazoMaxMeses) {
+        this.prazoMaxMeses = prazoMaxMeses;
+    }
+
+    public Double getValorMin() {
+        return valorMin;
+    }
+
+    public void setValorMin(Double valorMin) {
+        this.valorMin = valorMin;
+    }
+
+    public Double getValorMax() {
+        return valorMax;
+    }
+
+    public void setValorMax(Double valorMax) {
         this.valorMax = valorMax;
     }
 }
