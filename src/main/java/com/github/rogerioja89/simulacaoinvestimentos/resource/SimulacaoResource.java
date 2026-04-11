@@ -2,16 +2,17 @@ package com.github.rogerioja89.simulacaoinvestimentos.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.rogerioja89.simulacaoinvestimentos.dto.ErroResponse;
-import com.github.rogerioja89.simulacaoinvestimentos.dto.ProdutoValidadoResponse;
-import com.github.rogerioja89.simulacaoinvestimentos.dto.ResultadoSimulacaoResponse;
-import com.github.rogerioja89.simulacaoinvestimentos.dto.SimulacaoHistoricoResponse;
-import com.github.rogerioja89.simulacaoinvestimentos.dto.SimulacaoRequest;
-import com.github.rogerioja89.simulacaoinvestimentos.dto.SimulacaoResponse;
+import com.github.rogerioja89.simulacaoinvestimentos.resource.dto.ErroResponse;
+import com.github.rogerioja89.simulacaoinvestimentos.resource.dto.ProdutoValidadoResponse;
+import com.github.rogerioja89.simulacaoinvestimentos.resource.dto.ResultadoSimulacaoResponse;
+import com.github.rogerioja89.simulacaoinvestimentos.resource.dto.SimulacaoHistoricoResponse;
+import com.github.rogerioja89.simulacaoinvestimentos.resource.dto.SimulacaoRequest;
+import com.github.rogerioja89.simulacaoinvestimentos.resource.dto.SimulacaoResponse;
 import com.github.rogerioja89.simulacaoinvestimentos.entity.Simulacao;
 import com.github.rogerioja89.simulacaoinvestimentos.repository.SimulacaoRepository;
 import com.github.rogerioja89.simulacaoinvestimentos.service.SimulacaoService;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -47,6 +48,7 @@ public class SimulacaoResource {
         }
 
         SimulacaoRequest request;
+
         try {
             request = objectMapper.readValue(payload, SimulacaoRequest.class);
         } catch (JsonProcessingException e) {

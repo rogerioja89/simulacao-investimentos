@@ -23,67 +23,40 @@ public class SimulacaoService {
     @Inject
     CalculadoraValorFinal calculadoraValorFinal;
 
+    @Inject
+    SimulacaoValidator simulacaoValidator;
+
     /**
      * Cria uma simulação de investimento.
      */
     @Transactional
     public ResultadoCriacaoSimulacao criarSimulacao(Long clienteId, Double valor, Integer prazoMeses, String tipoProduto) {
-        // Validações básicas
-        if (clienteId == null || valor == null || prazoMeses == null || tipoProduto == null) {
-            return ResultadoCriacaoSimulacao.falha(
-                    "CAMPOS_OBRIGATORIOS_AUSENTES",
-                    "Payload incompleto para criação da simulação.",
-                    "Informe clienteId, valor, prazoMeses e tipoProduto."
-            );
-        }
-        String tipoProdutoNormalizado = tipoProduto.trim();
-        if (tipoProdutoNormalizado.isEmpty()) {
-            return ResultadoCriacaoSimulacao.falha(
-                    "TIPO_PRODUTO_INVALIDO",
-                    "Tipo de produto inválido.",
-                    "O campo tipoProduto não pode ser vazio."
-            );
-        }
-        if (valor <= 0 || prazoMeses <= 0) {
-            return ResultadoCriacaoSimulacao.falha(
-                    "VALOR_OU_PRAZO_INVALIDO",
-                    "Valor investido ou prazo inválido.",
-                    "O valor deve ser maior que zero e o prazoMeses deve ser positivo."
-            );
+        SimulacaoValidator.ResultadoValidacao validacaoEntrada =
+                simulacaoValidator.validarEntrada(clienteId, valor, prazoMeses, tipoProduto);
+
+        if (!validacaoEntrada.sucesso()) {
+            SimulacaoValidator.ErroValidacao erro = validacaoEntrada.erro();
+            return ResultadoCriacaoSimulacao.falha(erro.codigo(), erro.mensagem(), erro.detalhes());
         }
 
-        // Busca produto compatível
+        String tipoProdutoNormalizado = validacaoEntrada.valorNormalizado();
+
         Produto produto = produtoRepository.findByTipo(tipoProdutoNormalizado);
-        if (produto == null) {
-            return ResultadoCriacaoSimulacao.falha(
-                    "PRODUTO_NAO_ENCONTRADO",
-                    "Não existe produto para o tipo informado.",
-                    "Nenhum produto cadastrado para tipoProduto=" + tipoProdutoNormalizado + "."
-            );
+
+        SimulacaoValidator.ResultadoValidacao validacaoProduto =
+                simulacaoValidator.validarProduto(produto, valor, prazoMeses);
+
+        if (!validacaoProduto.sucesso()) {
+            SimulacaoValidator.ErroValidacao erro = validacaoProduto.erro();
+            return ResultadoCriacaoSimulacao.falha(erro.codigo(), erro.mensagem(), erro.detalhes());
         }
 
-        // Valida se o produto é elegível
-        boolean elegivel = valor >= produto.getValorMin() && valor <= produto.getValorMax()
-                && prazoMeses >= produto.getPrazoMinMeses() && prazoMeses <= produto.getPrazoMaxMeses();
-
-        if (!elegivel) {
-            return ResultadoCriacaoSimulacao.falha(
-                    "PRODUTO_NAO_ELEGIVEL",
-                    "Os dados informados não atendem às regras do produto.",
-                    "Faixas aceitas: valor entre " + produto.getValorMin() + " e " + produto.getValorMax()
-                            + ", prazo entre " + produto.getPrazoMinMeses() + " e " + produto.getPrazoMaxMeses() + " meses."
-            );
-        }
-
-        // Cálculo em juros compostos com capitalização mensal.
         double valorFinal = calculadoraValorFinal.calcular(
                 valor,
                 produto.getRentabilidadeAnual(),
                 prazoMeses
         );
 
-
-        // Cria a simulação
         Simulacao simulacao = new Simulacao(
                 clienteId,
                 produto.getNome(),

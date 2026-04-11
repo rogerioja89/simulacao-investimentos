@@ -1,4 +1,4 @@
-package com.github.rogerioja89.simulacaoinvestimentos.dto;
+package com.github.rogerioja89.simulacaoinvestimentos.resource.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
