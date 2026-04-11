@@ -20,6 +20,9 @@ public class SimulacaoService {
     @Inject
     SimulacaoRepository simulacaoRepository;
 
+    @Inject
+    CalculadoraValorFinal calculadoraValorFinal;
+
     /**
      * Cria uma simulação de investimento.
      */
@@ -50,7 +53,7 @@ public class SimulacaoService {
         }
 
         // Busca produto compatível
-        Produto produto = produtoRepository.findByTipoIgnoreCase(tipoProdutoNormalizado);
+        Produto produto = produtoRepository.findByTipo(tipoProdutoNormalizado);
         if (produto == null) {
             return ResultadoCriacaoSimulacao.falha(
                     "PRODUTO_NAO_ENCONTRADO",
@@ -73,7 +76,12 @@ public class SimulacaoService {
         }
 
         // Cálculo em juros compostos com capitalização mensal.
-        double valorFinal = valor * Math.pow(1 + produto.getRentabilidadeAnual() / 12.0, prazoMeses);
+        double valorFinal = calculadoraValorFinal.calcular(
+                valor,
+                produto.getRentabilidadeAnual(),
+                prazoMeses
+        );
+
 
         // Cria a simulação
         Simulacao simulacao = new Simulacao(

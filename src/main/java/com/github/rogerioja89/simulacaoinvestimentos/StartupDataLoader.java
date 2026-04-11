@@ -16,14 +16,14 @@ public class StartupDataLoader {
 
     @Transactional
     void init(@Observes StartupEvent ev) {
-        if (produtoRepository.findByTipoIgnoreCase("CDB") == null) {
+        if (produtoRepository.findByTipo("CDB") == null) {
             produtoRepository.persist(new Produto("CDB Caixa 2026", "CDB", 0.12, "Baixo", 6, 36, 1000.0, 50000.0));
         }
-        if (produtoRepository.findByTipoIgnoreCase("LCI") == null) {
-            produtoRepository.persist(new Produto("LCI Caixa 2027", "LCI", 0.10, "Médio", 12, 48, 5000.0, 100000.0));
+        if (produtoRepository.findByTipo("LCI") == null) {
+            produtoRepository.persist(new Produto("LCI Caixa 2026", "LCI", 0.10, "Médio", 12, 48, 5000.0, 100000.0));
         }
-        if (produtoRepository.findByTipoIgnoreCase("LCA") == null) {
-            produtoRepository.persist(new Produto("LCA Caixa 2028", "LCA", 0.14, "Alto", 24, 60, 10000.0, 200000.0));
+        if (produtoRepository.findByTipo("LCA") == null) {
+            produtoRepository.persist(new Produto("LCA Caixa 2026", "LCA", 0.14, "Alto", 24, 60, 10000.0, 200000.0));
         }
     }
 }
