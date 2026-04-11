@@ -40,11 +40,6 @@
             <artifactId>quarkus-rest</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-h2</artifactId>
-            <scope>test</scope>
-            </dependency>
-        <dependency>
             <groupId>io.quarkiverse.jdbc</groupId>
             <artifactId>quarkus-jdbc-sqlite</artifactId>
             <version>3.0.11</version>
